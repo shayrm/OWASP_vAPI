@@ -6,7 +6,7 @@ eksctl create cluster \
 	--node-type t2.micro \
 	--nodes 1 \
 	--ssh-access=true \
-	--ssh-public-key=/home/rdadmin/.ssh/id_rsa_Shay-keys.pub
+	--ssh-public-key=$PUB_KEY
 
 # to delete run:
 # eksctl delete cluster --region=eu-west-1 --name=Shay-vAPI-test
