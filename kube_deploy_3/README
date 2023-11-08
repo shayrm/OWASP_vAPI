@@ -1,0 +1,5 @@
+
+
+Creating deploy yml files with kompose:
+
+$ kompose convert -f ../docker-compose.yml --volumes hostPath

@@ -1,17 +1,36 @@
 # vAPI [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Check%20out%20vAPI%20on%20Github!&url=https://github.com/roottusk/vapi&via=vk_tushar&hashtags=apisecurity,apitop10,owasp)
 
-[![Docker](https://img.shields.io/badge/docker-support-%2300D1D1)](https://github.com/roottusk/vapi#installation-docker) 
-[![Build Status](https://app.travis-ci.com/roottusk/vapi.svg?branch=master)](https://app.travis-ci.com/roottusk/vapi)
+[![Docker](https://img.shields.io/badge/docker-support-%2300D1D1)](https://docs.docker.com/compose/) 
+[![kubernetes](https://img.shields.io/badge/kubernetes-support-%2300D1D1)](https://eksctl.io/getting-started/) 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blueviolet.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Version](https://img.shields.io/badge/version-v1.1-blue)](https://github.com/roottusk/vapi) 
 [![PHP](https://img.shields.io/badge/php-7.3^-yellow)](https://github.com/roottusk/vapi)
-[![Laravel](https://img.shields.io/badge/Laravel-8-orange)](https://github.com/roottusk/vapi)
-[![Issues](https://img.shields.io/github/issues-closed/roottusk/vapi?color=%23eb3434)](https://github.com/roottusk/vapi/issues)
+
 <p align="center">
 <img src="vapi_logo.png" >
 </p>
 
 vAPI is Vulnerable Adversely Programmed Interface which is Self-Hostable API that mimics OWASP API Top 10 scenarios in the means of Exercises. 
+
+This environment was build to create a PoC for API most common vulnerabilities. 
+At first, instead of vAPI, I thought of taking a "real life" case. 
+I use Shodan to search for open systems (found quite a lot of mongo Ex opened servers)
+
+But I decided to “go the extra mile” and produce a consolidated solution that will combine futures demos.
+ 
+
+Solution description:
+
+1) I used vAPI project to be able to demo all OWASP API top 10 including BOLA 
+(more info could be found [here](https://www.traceable.ai/blog-post/a-deep-dive-on-the-most-critical-api-vulnerability-bola-broken-object-level-authorization))
+
+2) The original vAPI project was made on docker-compose and I managed to convert it to K8s and installed on AWS EKS. 
+Many adjustments were needed to make it fit to EKS.
+For that I use the `kompose` and `eksctl` tools. 
+
+3) Enable VPC mirroring to be able to capture the API request. It allow me to create pcap (capture) files and record the attacks simulation.
+
+4) The setup is available and I includes API calls and the postman requests.
 
 
 # Requirements
@@ -20,6 +39,20 @@ vAPI is Vulnerable Adversely Programmed Interface which is Self-Hostable API tha
 * MySQL
 * PostMan
 * MITM Proxy
+
+# Installation (EKS)
+Create a new cluster on EKS or skip this part and use existing one
+
+```bash
+./create_k8s_cluster_on_eks.sh
+```
+
+Get into the deployment directory and apply the deployment
+(better to create a namespace before apply)
+
+```bash
+kubectl apply -f ./kube_deploy/
+```
 
 # Installation (Docker)
 
@@ -104,9 +137,6 @@ The MYSQL_ROOT_PASSWORD on line 232 in the `values.yaml` must match that on line
 [@Hack, Riyadh, KSA](https://athack.com/speakers?keys=Tushar)
 
 
-# Upcoming
-
-[APISecure.co](https://apisecure.co/)
 
 # Mentions and References
 [1] https://apisecurity.io/issue-132-experian-api-leak-breaches-digitalocean-geico-burp-plugins-vapi-lab/
@@ -131,7 +161,4 @@ The MYSQL_ROOT_PASSWORD on line 232 in the `values.yaml` must match that on line
 
 [3] https://medium.com/@jyotiagarwal3190/roottusk-vapi-writeup-341ec99879c (vAPI 1.1 Writeup)
 
-# Acknowledgements
-
-* The icon and banner uses image from [Flaticon](https://www.flaticon.com/free-icon/bug_190835)
 
